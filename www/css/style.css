@@ -1,3 +1,7 @@
 .center {
-	margin-left: 30px;
+	text-align: center;
+}
+
+.pic {
+	margin-left: 95px;
 }

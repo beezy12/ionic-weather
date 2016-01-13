@@ -84,50 +84,33 @@ angular.module('starter', ['ionic'])
         .then(function(holder) {
           console.log("holder", holder);
           console.log(holder.data.current_observation.station_id);
-          //var thang = holder.data.current_observation.station_id;
-
-          stationArray = JSON.parse(localStorage.getItem("searchHistory"));
-          thang = holder.data.current_observation.station_id;
-          stationArray.push(thang);
-
-          localStorage.setItem('searchHistory', JSON.stringify(stationArray));
-
-
-
           
 
+
+          stationArray = JSON.parse(localStorage.getItem("searchHistory"));
+          console.log("stationArray", stationArray);
+
+          thang = holder.data.current_observation.station_id;
+
+          if(stationArray.indexOf(thang) === -1) {
+            stationArray.push(thang);
+            localStorage.setItem('searchHistory', JSON.stringify(stationArray));
+          } else {
+            console.log("it's already here");
+          }  
+            
+
         })
-
-        
-
-        
-
-        
-
-
-
-
-
+          
 
       // add searchHistory as an array
       // only add unique values
-
     }
 
   })
 
 
 
-// home.doSearch = function () {
-//    console.log("Search Dat Weather");
-//    $http.get(url + 'conditions/forecast/q/' + home.search + '.json').then(function (response) {
-//      console.log("searchData", response);
-//    });
-//  }
 
+          
 
-
-
-
-  
-    

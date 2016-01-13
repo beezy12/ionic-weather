@@ -36,12 +36,14 @@
         </button>
       </div>
         <!-- <ion-nav-view></ion-nav-view> -->
-
+      <div>
+        <img ng-src="{{weather.weath.icon_url}}" class="pic" height="200px" width="200px"></img>
         <h1 class="center">{{weather.weath.temp_f}}°F</h1>
-        <h1>{{weather.weath.display_location.city}}</h1>
+        <h1 class="center">{{weather.weath.display_location.city}}, {{weather.weath.display_location.state}}</h1>
         <div class="center">{{weather.weath.icon}}</div>
-        <img ng-src="{{weather.weath.icon_url}}" class="center"></img>
         <!-- <div ng-class="{sun : weather.class}"></div>-->
+      </div>
+
       </ion-content>
     </ion-pane>
 
