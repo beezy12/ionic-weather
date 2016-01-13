@@ -32,7 +32,11 @@ angular.module('starter', ['ionic'])
   navigator.geolocation.getCurrentPosition(function (geopos) {
     var lat = geopos.coords.latitude;
     var long = geopos.coords.longitude;
-    var apikey = '409982af42c889e99a89fb0f56fa8d13'
+
+    // api for forecast.io
+    // var apikey = '409982af42c889e99a89fb0f56fa8d13';
+
+    var apikey = '9231b583bbcd9494';
     var url = 'api/forecast/' + apikey + '/' + lat + ',' + long;
 
     // var that = this;
