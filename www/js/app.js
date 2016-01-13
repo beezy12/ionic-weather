@@ -26,32 +26,54 @@ angular.module('starter', ['ionic'])
 
 .controller("weatherCtrl", function($http, $scope) {
 
-  var weather = this;
+  var self = this;
 
 
-  navigator.geolocation.getCurrentPosition(function (geopos) {
-    var lat = geopos.coords.latitude;
-    var long = geopos.coords.longitude;
+  // navigator.geolocation.getCurrentPosition(function (geopos) {
+  //   var lat = geopos.coords.latitude;
+  //   var long = geopos.coords.longitude;
 
     // api for forecast.io
     // var apikey = '409982af42c889e99a89fb0f56fa8d13';
 
-    var apikey = '9231b583bbcd9494';
-    var url = "http://api.wunderground.com/api/f0f91718263c9ba6/geolookup/q/37.776289,-122.395234.json";
+    //var apikey = '9231b583bbcd9494';
+
+    //var ip = "http://api.wunderground.com/api/f0f91718263c9ba6/conditions/geolookup/q/autoip.json";
+
+    //var weather = "http://api.wunderground.com/api/f0f91718263c9ba6/conditions/q/CA/San_Francisco.json"
+
+    //var url = "http://api.wunderground.com/api/f0f91718263c9ba6/geolookup/q/37.776289,-122.395234.json";
 
     // var that = this;
 
 
-    $http.get(url).then(function(res) {
-      weather.temp = parseInt(res.data.currently.temperature);
-      weather.class = res.data.currently.icon;
-      // this.pic = res.data.currently.icon;
+    $http.get("http://api.wunderground.com/api/f0f91718263c9ba6/forecast/conditions/geolookup/q/autoip.json")
+    .then(function(res) {
+      console.log("result from ip ", res);
+      console.log(res.data);
+
+      var lat = res.data.location.lat;
+      console.log("lat", lat);
+
+      var lon = res.data.location.lon;
+      console.log("lon", lon);
+
+      self.weath = res.data.current_observation;
+      console.log("self.weath", self.weath);
+
+
+
+        // $http.get("http://api.wunderground.com/api/f0f91718263c9ba6/conditions/q/" + lat + lon + ".json")
+        // .then(function(weath) {
+        //   console.log("weath", weath);
+
+
     })
-  });
+  //});
+  })
+  //weather.temp = "--"
 
-  weather.temp = "--"
 
-})
 
 
 
