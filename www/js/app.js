@@ -37,7 +37,7 @@ angular.module('starter', ['ionic'])
     // var apikey = '409982af42c889e99a89fb0f56fa8d13';
 
     var apikey = '9231b583bbcd9494';
-    var url = 'api/forecast/' + apikey + '/' + lat + ',' + long;
+    var url = "http://api.wunderground.com/api/f0f91718263c9ba6/geolookup/q/37.776289,-122.395234.json";
 
     // var that = this;
 
