@@ -24,11 +24,14 @@ angular.module('starter', ['ionic'])
 })
 
 
-.controller("weatherCtrl", function($http, $scope) {
+.controller("weatherCtrl", function($http) {
 
   var self = this;
 
+  self.searchQuery;
 
+  var holder;
+  var thang;
   // navigator.geolocation.getCurrentPosition(function (geopos) {
   //   var lat = geopos.coords.latitude;
   //   var long = geopos.coords.longitude;
@@ -38,16 +41,16 @@ angular.module('starter', ['ionic'])
 
     //var apikey = '9231b583bbcd9494';
 
-    //var ip = "http://api.wunderground.com/api/f0f91718263c9ba6/conditions/geolookup/q/autoip.json";
+    var ip = "http://api.wunderground.com/api/f0f91718263c9ba6/conditions/geolookup/q/autoip.json";
 
     //var weather = "http://api.wunderground.com/api/f0f91718263c9ba6/conditions/q/CA/San_Francisco.json"
 
-    //var url = "http://api.wunderground.com/api/f0f91718263c9ba6/geolookup/q/37.776289,-122.395234.json";
+    var url = "http://api.wunderground.com/api/f0f91718263c9ba6/conditions/forecast/q/";
 
     // var that = this;
 
 
-    $http.get("http://api.wunderground.com/api/f0f91718263c9ba6/forecast/conditions/geolookup/q/autoip.json")
+    $http.get(ip)
     .then(function(res) {
       console.log("result from ip ", res);
       console.log(res.data);
@@ -58,37 +61,73 @@ angular.module('starter', ['ionic'])
       var lon = res.data.location.lon;
       console.log("lon", lon);
 
+      // console.log("url", url);
+
       self.weath = res.data.current_observation;
       console.log("self.weath", self.weath);
-
-
-
-        // $http.get("http://api.wunderground.com/api/f0f91718263c9ba6/conditions/q/" + lat + lon + ".json")
-        // .then(function(weath) {
-        //   console.log("weath", weath);
-
-
     })
-  //});
+
+
+
+    self.search = function() {
+
+      var stationArray = [];
+
+      $http.get(url + self.searchQuery + ".json")
+        .then(function(res) {
+          console.log("res", res);
+          self.weath = res.data.current_observation;
+          return res;
+        })
+         
+          //adds search criteria to local storage
+        .then(function(holder) {
+          console.log("holder", holder);
+          console.log(holder.data.current_observation.station_id);
+          //var thang = holder.data.current_observation.station_id;
+
+          stationArray = JSON.parse(localStorage.getItem("searchHistory"));
+          thang = holder.data.current_observation.station_id;
+          stationArray.push(thang);
+
+          localStorage.setItem('searchHistory', JSON.stringify(stationArray));
+
+
+
+          
+
+        })
+
+        
+
+        
+
+        
+
+
+
+
+
+
+      // add searchHistory as an array
+      // only add unique values
+
+    }
+
   })
-  //weather.temp = "--"
+
+
+
+// home.doSearch = function () {
+//    console.log("Search Dat Weather");
+//    $http.get(url + 'conditions/forecast/q/' + home.search + '.json').then(function (response) {
+//      console.log("searchData", response);
+//    });
+//  }
 
 
 
 
 
-// .config(function($stateProvider, $urlRouterProvider) {
-
-//   $stateProvider
-
-//   .state('root', {
-//     url:'/',
-//     template:'<h1>HELLLLLOOOOOO</h1>'
-//   });
-
-//   $urlRouterProvider.otherwise('/')
-
-
-
-// })
+  
     
