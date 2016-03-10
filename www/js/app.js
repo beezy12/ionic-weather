@@ -71,7 +71,7 @@ angular.module('starter', ['ionic'])
 
     self.search = function() {
 
-      var stationArray = [];
+
 
       $http.get(url + self.searchQuery + ".json")
         .then(function(res) {
@@ -79,17 +79,10 @@ angular.module('starter', ['ionic'])
           self.weath = res.data.current_observation;
           return res;
         })
-         
+
           //adds search criteria to local storage
         .then(function(holder) {
-          console.log("holder", holder);
-          console.log(holder.data.current_observation.station_id);
-          
-
-
-          stationArray = JSON.parse(localStorage.getItem("searchHistory"));
-          console.log("stationArray", stationArray);
-
+          var stationArray = JSON.parse(localStorage.getItem("searchHistory")) || [];
           thang = holder.data.current_observation.station_id;
 
           if(stationArray.indexOf(thang) === -1) {
@@ -97,20 +90,9 @@ angular.module('starter', ['ionic'])
             localStorage.setItem('searchHistory', JSON.stringify(stationArray));
           } else {
             console.log("it's already here");
-          }  
-            
-
+          }
         })
-          
-
-      // add searchHistory as an array
-      // only add unique values
     }
 
   })
-
-
-
-
-          
 
