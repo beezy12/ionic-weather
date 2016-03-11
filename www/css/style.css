@@ -1,3 +1,7 @@
-.sun {
-	background-image: url("../img/Sunny-icon");
+.center {
+	text-align: center;
+}
+
+.pic {
+	margin-left: 95px;
 }

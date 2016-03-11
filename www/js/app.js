@@ -24,45 +24,75 @@ angular.module('starter', ['ionic'])
 })
 
 
-.controller("weatherCtrl", function($http, $scope) {
+.controller("weatherCtrl", function($http) {
 
-  var weather = this;
+  var self = this;
 
+  self.searchQuery;
 
-  navigator.geolocation.getCurrentPosition(function (geopos) {
-    var lat = geopos.coords.latitude;
-    var long = geopos.coords.longitude;
-    var apikey = '409982af42c889e99a89fb0f56fa8d13'
-    var url = 'api/forecast/' + apikey + '/' + lat + ',' + long;
+  var holder;
+  var thang;
+  // navigator.geolocation.getCurrentPosition(function (geopos) {
+  //   var lat = geopos.coords.latitude;
+  //   var long = geopos.coords.longitude;
+
+    // api for forecast.io
+    // var apikey = '409982af42c889e99a89fb0f56fa8d13';
+
+    //var apikey = '9231b583bbcd9494';
+
+    var ip = "http://api.wunderground.com/api/f0f91718263c9ba6/conditions/geolookup/q/autoip.json";
+
+    //var weather = "http://api.wunderground.com/api/f0f91718263c9ba6/conditions/q/CA/San_Francisco.json"
+
+    var url = "http://api.wunderground.com/api/f0f91718263c9ba6/conditions/forecast/q/";
 
     // var that = this;
 
 
-    $http.get(url).then(function(res) {
-      weather.temp = parseInt(res.data.currently.temperature);
-      weather.class = res.data.currently.icon;
-      // this.pic = res.data.currently.icon;
+    $http.get(ip)
+    .then(function(res) {
+      console.log("result from ip ", res);
+      console.log(res.data);
+
+      var lat = res.data.location.lat;
+      console.log("lat", lat);
+
+      var lon = res.data.location.lon;
+      console.log("lon", lon);
+
+      // console.log("url", url);
+
+      self.weath = res.data.current_observation;
+      console.log("self.weath", self.weath);
     })
-  });
-
-  weather.temp = "--"
-
-})
 
 
 
-// .config(function($stateProvider, $urlRouterProvider) {
-
-//   $stateProvider
-
-//   .state('root', {
-//     url:'/',
-//     template:'<h1>HELLLLLOOOOOO</h1>'
-//   });
-
-//   $urlRouterProvider.otherwise('/')
+    self.search = function() {
 
 
 
-// })
-    
+      $http.get(url + self.searchQuery + ".json")
+        .then(function(res) {
+          console.log("res", res);
+          self.weath = res.data.current_observation;
+          return res;
+        })
+
+          //adds search criteria to local storage
+        .then(function(holder) {
+          var stationArray = JSON.parse(localStorage.getItem("searchHistory")) || [];
+          thang = holder.data.current_observation.station_id;
+
+          if(stationArray.indexOf(thang) === -1) {
+            stationArray.push(thang);
+            localStorage.setItem('searchHistory', JSON.stringify(stationArray));
+          } else {
+            console.log("it's already here");
+          }
+        })
+    }
+
+  })
+
