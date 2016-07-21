@@ -23,6 +23,14 @@
   used under CC BY http://creativecommons.org/licenses/by/4.0/
   Modified icons to fit ionicon’s grid from original.
 */
+
+body {
+    background-image: url("../img/hdWeather.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+
 @font-face {
   font-family: "Ionicons";
   src: url("../fonts/ionicons.eot?v=2.0.1");
